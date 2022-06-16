@@ -54,7 +54,7 @@ def init_app(app: Flask):
 
             inserted_data = DBManipulation.save(data)
 
-            return inserted_data, 201
+            return {'_id': inserted_data}, 201
         
         except KeyMissingError as error:
 

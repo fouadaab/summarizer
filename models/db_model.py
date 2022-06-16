@@ -42,7 +42,7 @@ class DBManipulation():
 
 
     @classmethod
-    def save(cls, data: str) -> dict:
+    def save(cls, data: str) -> int:
 
         target_new_id = cls.get_new_id() 
 
@@ -50,7 +50,7 @@ class DBManipulation():
 
         db.texts.insert_one(data_to_save)
 
-        return {'_id': target_new_id}
+        return target_new_id
 
 
     def delete_a_text(self, id: int) -> dict:
