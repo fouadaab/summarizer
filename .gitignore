@@ -1,3 +1,6 @@
+#Zipped base version
+*.zip
+
 # Private Docs
 doc
 
