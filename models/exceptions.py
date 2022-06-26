@@ -2,11 +2,11 @@ class KeyMissingError(Exception) :
 
     def __init__(self, message) -> None:
 
-        self.message = f'your missing these keys: {message}'
+        self.error = f'Unexpected Key ID returned: {message}'
 
 
 class ValueTypeError(Exception) :
 
-    def __init__(self, message) -> None:
+    def __init__(self) -> None:
 
-        self.message = f'Only string type. These props has a different type: {set(message)}'
+        self.error = f'Only numeric type detected.'

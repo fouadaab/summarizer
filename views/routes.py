@@ -5,6 +5,7 @@ from summarizer.sbert import SBertSummarizer
 import nltk
 from typing import Tuple
 import enum
+import re
 
 # Using an instance of SBERT to create the model
 model = SBertSummarizer('paraphrase-MiniLM-L6-v2')
@@ -52,17 +53,22 @@ def init_app(app: Flask):
 
             data = request.form['data']
 
-            inserted_data = DBManipulation.save(data)
+            pattern = re.compile(r'\s+|\,|\.|\'|\"')
+            check = re.sub(pattern, '', data)
 
-            return {'_id': inserted_data}, 201
+            if check.isnumeric():
+                raise ValueTypeError
+
+            inserted_key = DBManipulation.save(data)
+
+            if not isinstance(inserted_key, int):
+                raise KeyMissingError(inserted_key)
+
+            return {'_id': inserted_key}, 201
         
-        except KeyMissingError as error:
+        except Exception as error:
 
-            return error.__dict__, 400
-
-        except ValueTypeError as error:
-
-            return error.__dict__, 400
+            return error, 400
 
 
     @app.delete('/text/<int:id>')
